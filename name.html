@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人信息卡片</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 标题样式 */
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        /* 卡片容器 */
+        .card {
+            background-color: white;
+            width: 350px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* 头像区域 */
+        .avatar-container {
+            position: relative;
+        }
+
+        #avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #409eff;
+            cursor: pointer;
+        }
+
+        /* 隐藏的文件选择器 */
+        #avatarInput {
+            display: none;
+        }
+
+        /* 可编辑区域 */
+        .info-item {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-item label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .info-item input,
+        .info-item textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: none;
+            transition: border-color 0.3s;
+        }
+
+        .info-item input:focus,
+        .info-item textarea:focus {
+            outline: none;
+            border-color: #409eff;
+        }
+
+        /* 保存按钮 */
+        #saveBtn {
+            width: 100%;
+            padding: 12px;
+            background-color: #409eff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #saveBtn:hover {
+            background-color: #66b1ff;
+        }
+    </style>
+</head>
+<body>
+<h1>个人信息卡片</h1>
+<div class="card">
+    <!-- 头像区域 -->
+    <div class="avatar-container">
+        <img id="avatar" src="https://via.placeholder.com/100" alt="用户头像">
+        <input type="file" id="avatarInput" accept="image/*">
+    </div>
+
+    <!-- 姓名编辑 -->
+    <div class="info-item">
+        <label for="name">姓名</label>
+        <input type="text" id="name" placeholder="请输入您的姓名">
+    </div>
+
+    <!-- 个人简介编辑 -->
+    <div class="info-item">
+        <label for="bio">个人简介</label>
+        <textarea id="bio" rows="3" placeholder="请输入您的个人简介"></textarea>
+    </div>
+
+    <!-- 保存按钮 -->
+    <button id="saveBtn">保存</button>
+</div>
+
+<script>
+    // 获取DOM元素
+    const avatar = document.getElementById('avatar');
+    const avatarInput = document.getElementById('avatarInput');
+    const nameInput = document.getElementById('name');
+    const bioInput = document.getElementById('bio');
+    const saveBtn = document.getElementById('saveBtn');
+
+    // 头像点击上传事件
+    avatar.addEventListener('click', () => {
+        avatarInput.click();
+    });
+
+    // 头像上传预览
+    avatarInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                avatar.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // 保存按钮点击事件
+    saveBtn.addEventListener('click', () => {
+        // 获取输入内容
+        const name = nameInput.value.trim();
+        const bio = bioInput.value.trim();
+
+        // 简单验证
+        if (!name) {
+            alert('请输入您的姓名！');
+            return;
+        }
+
+        // 模拟保存（这里可以替换为实际的后端请求）
+        alert(`保存成功！\n姓名：${name}\n简介：${bio || '无'}`);
+    });
+</script>
+</body>
+</html>
